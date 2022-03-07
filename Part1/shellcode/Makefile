@@ -2,6 +2,10 @@
 all: 
 	gcc -m32 -z execstack -o a32.out call_shellcode.c
 	gcc -z execstack -o a64.out call_shellcode.c
+	
+turn-on-nonexecstack:
+	gcc -m32 -o a32.out call_shellcode.c
+	gcc -o a64.out call_shellcode.c
 
 setuid:
 	gcc -m32 -z execstack -o a32.out call_shellcode.c
