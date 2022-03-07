@@ -52,7 +52,7 @@ The exploit code is as follows -
 ## Task 7 : Defeating Dash Counter Measure
 
 To achieve this task, I linked /bin/dash to /bin/sh.
-I ran the previous exploits and noticed that I was n![part1-task7-img4](Artifacts/hr2340-screenshot14.png)ot able to get root shell.
+I ran the previous exploits and noticed that I was not able to get root shell.
 ![part1-task7-img1](Artifacts/hr2340-screenshot11.png)
 
 I further compiled the binaries by using the setuid flag on, using the command “make setuid”. Even after this, running the shell didnt provide me with a root shell.
